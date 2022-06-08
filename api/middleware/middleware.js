@@ -2,8 +2,8 @@ const Users = require('../users/users-model');
 
 function logger(req, res, next) {
   // DO YOUR MAGIC
-  const timestamp = Date().toLocaleString;
-  console.log(`${req.method} ${req.originalUrl} ${timestamp}`);
+  // const timestamp = Date().toLocaleString();
+  console.log(`${req.method} ${req.originalUrl} ${res.Date}`);
   next();
 }
 
@@ -36,12 +36,12 @@ function validateUser(req, res, next) {
 
 function validatePost(req, res, next) {
   // DO YOUR MAGIC
-  let { text } = req.body.text;
-  if(text == null || text.trim() ==''){
+  let { text } = req.body;
+  if(!text || !text.trim()){
     res.status(400).json({ message: 'missing required text field' })
     return;
   }
-  req.text = {text: text.trim()};
+  req.text = text.trim();
   next();
 }
 

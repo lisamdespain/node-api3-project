@@ -65,7 +65,7 @@ router.delete('/:id', validateUserId, async (req, res) => {
 router.get('/:id/posts', validateUserId, (req, res) => {
   // RETURN THE ARRAY OF USER POSTS
   // this needs a middleware to verify user id
-  Posts.getById(req.params.user_id)
+  Users.getUserPosts(req.params.id)
   .then(posts =>{
     res.status(200).json(posts);
   }).catch(error =>{
@@ -77,7 +77,7 @@ router.post('/:id/posts', validateUserId, validatePost, (req, res) => {
   // RETURN THE NEWLY CREATED USER POST
   // this needs a middleware to verify user id
   // and another middleware to check that the request body is valid
-  Posts.insert(req.text)
+  Posts.insert({ user_id: req.params.id, text: req.text })
   .then(post =>{
     res.status(201).json(post)
   }).catch(error =>{
